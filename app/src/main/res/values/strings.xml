@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Linetwdemo</string>
+
+    <string name="name">電影名稱:</string>
+    <string name="rating">評分:</string>
+    <string name="createDate">出版日期:</string>
+    <string name="totalViews">觀看次數:</string>
+</resources>
