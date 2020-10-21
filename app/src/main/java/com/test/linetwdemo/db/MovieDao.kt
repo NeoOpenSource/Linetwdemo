@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-
+import io.reactivex.rxjava3.core.Flowable
 
 
 @Dao
@@ -14,10 +14,11 @@ interface MovieDao {
     fun insertMovieList(order: List<MovieTable>)
 
     @Query("SELECT * FROM MovieTable")
-    fun getAll(): LiveData<List<MovieTable>>
+    fun getAll2(): LiveData<List<MovieTable>>
 
     @Query("SELECT * FROM MovieTable")
-    fun getAll2(): List<MovieTable>
+    fun getAll(): List<MovieTable>
+
 
     @Query("SELECT * FROM MovieTable WHERE name LIKE :search ")
     fun findUserWithName(search: String): LiveData<List<MovieTable>>
