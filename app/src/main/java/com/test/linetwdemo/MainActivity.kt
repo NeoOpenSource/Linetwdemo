@@ -11,10 +11,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         setSupportActionBar(toolbar)
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, MainFragment.newInstance())
-                    .commitNow()
-        }
+ //       if (savedInstanceState == null) {
+//            supportFragmentManager.beginTransaction()
+//                    .replace(R.id.container, MainFragment.newInstance())
+//                    .commitNow()
+//        }
     }
 }

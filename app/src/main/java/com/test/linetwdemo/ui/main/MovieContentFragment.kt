@@ -12,28 +12,12 @@ import kotlinx.android.synthetic.main.fragment_movie_content.*
 
 
 class MovieContentFragment : Fragment() {
-    private var mParam: Movie = Movie("","","","","","")
-
-    companion object {
-        private const val ARG_PARAM1 = "param1"
-
-        fun newInstance(param1: Movie): MovieContentFragment {
-            val fragment = MovieContentFragment()
-            val args = Bundle()
-            args.putParcelable(ARG_PARAM1,param1)
-            fragment.arguments = args
-            return fragment
-        }
-    }
+    private var mParam: Movie = Movie("", "", "", "", "", "")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            arguments?.let{
-                it.getParcelable<Movie>(ARG_PARAM1)?.let {
-                        movie -> mParam = movie
-                }
-            }
+        arguments?.let {
+            mParam = MovieContentFragmentArgs.fromBundle(it).param1
         }
     }
 
@@ -52,7 +36,6 @@ class MovieContentFragment : Fragment() {
         createDateContent.text = mParam.created_at
         ratingContent.text = mParam.rating
     }
-
 
 
 }

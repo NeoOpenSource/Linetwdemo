@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.test.linetwdemo.R
@@ -18,13 +19,11 @@ import com.test.linetwdemo.utils.initLayout
 import kotlinx.android.synthetic.main.main_fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class MainFragment : Fragment() {
 
     companion object {
         fun newInstance() = MainFragment()
     }
-
     private val viewModel: MainViewModel by viewModel()
     private val movieAdapter = MovieRecyclerViewAdapter(ArrayList())
     override fun onCreateView(
@@ -41,11 +40,8 @@ class MainFragment : Fragment() {
         movieAdapter.recyclerViewItemClick = object :RecyclerViewAdapter.RecyclerViewItemClick{
             override fun onClick(position: Int) {
                 closeKeyBoard()
-                val fragment2 = MovieContentFragment.newInstance(movieAdapter.getData()[position])
-                val fragmentManager = childFragmentManager
-                val fragmentTransaction = fragmentManager.beginTransaction()
-                fragmentTransaction.replace(R.id.main, fragment2)
-                fragmentTransaction.commit()
+                Navigation.findNavController(requireView())
+                    .navigate(MainFragmentDirections.actionMainFragmentToMovieContentFragment(movieAdapter.getData()[position]))
             }
         }
         viewModel.result.observe(viewLifecycleOwner){
@@ -89,10 +85,4 @@ class MainFragment : Fragment() {
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//        //viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-//
-//    }
-
 }
