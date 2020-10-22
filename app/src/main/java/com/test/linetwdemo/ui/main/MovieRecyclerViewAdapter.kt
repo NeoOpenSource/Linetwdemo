@@ -21,13 +21,11 @@ class MovieRecyclerViewAdapter(data: List<Movie>) :
     }
 
     override fun initData(holder: MovieViewHolder, positionData: Movie) {
-        holder.itemView.layoutParams.height = getItemHeight(holder.itemView, 4)
+        holder.itemView.layoutParams.height = getItemHeight(holder.itemView, 6)
         Glide.with(holder.itemView).load(positionData.thumb).centerCrop().into(holder.itemView.imageView)
         holder.itemView.nameTextContent.text = positionData.name
         holder.itemView.createDateContent.text = positionData.created_at
         holder.itemView.ratingTextContent.text = positionData.rating
-        //holder.imageView.setBackgroundResource(positionData.imageRid)
-        //holder.name.text = positionData.name
     }
 
     class MovieViewHolder(itemView: View) : RecyclerViewItemViewHolder(itemView) {}

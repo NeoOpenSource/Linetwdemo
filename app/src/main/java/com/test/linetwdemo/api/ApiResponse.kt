@@ -3,7 +3,7 @@ package com.test.linetwdemo.api
 import androidx.annotation.Nullable
 import retrofit2.Response
 
-public class ApiResponse<T> {
+class ApiResponse<T> {
     val code: Int
 
     @Nullable

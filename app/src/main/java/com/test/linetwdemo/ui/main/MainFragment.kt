@@ -1,11 +1,13 @@
 package com.test.linetwdemo.ui.main
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
@@ -38,6 +40,7 @@ class MainFragment : Fragment() {
         recyclerView.adapter = movieAdapter
         movieAdapter.recyclerViewItemClick = object :RecyclerViewAdapter.RecyclerViewItemClick{
             override fun onClick(position: Int) {
+                closeKeyBoard()
                 val fragment2 = MovieContentFragment.newInstance(movieAdapter.getData()[position])
                 val fragmentManager = childFragmentManager
                 val fragmentTransaction = fragmentManager.beginTransaction()
@@ -79,10 +82,17 @@ class MainFragment : Fragment() {
             }
         })
     }
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        //viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-
+    private fun closeKeyBoard() {
+        val view = requireActivity().currentFocus
+        if (view != null) {
+            val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
+//    override fun onActivityCreated(savedInstanceState: Bundle?) {
+//        super.onActivityCreated(savedInstanceState)
+//        //viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+//
+//    }
 
 }
