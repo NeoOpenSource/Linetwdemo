@@ -12,9 +12,6 @@ class MainViewModel(private val repo: DataRepository) : ViewModel() {
         val liveDate = repo.getMovieList()
         result.removeSource(liveDate)
         result.addSource(liveDate){
-            if (it.status != Status.LOADING){
-                result.removeSource(liveDate)
-            }
             result.value = it
         }
 
