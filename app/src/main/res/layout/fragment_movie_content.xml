@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.main.MovieContentFragment">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <ImageView
+        android:id="@+id/imageViewContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@android:drawable/sym_def_app_icon"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintDimensionRatio="1:2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/movieName"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@color/darkTextColor"
+        app:autoSizeMaxTextSize="25sp"
+        app:autoSizeMinTextSize="8sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintHeight_percent="0.2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+    <TextView
+        android:id="@+id/totalViewsText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/totalViews"
+        android:textColor="@color/darkTextColor"
+        android:gravity="center_vertical"
+        app:autoSizeMaxTextSize="15sp"
+        app:autoSizeMinTextSize="8sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movieName" />
+
+    <TextView
+        android:id="@+id/totalViewsContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textColor="@color/darkTextColor"
+        android:gravity="center_vertical"
+        app:autoSizeMaxTextSize="15sp"
+        app:autoSizeMinTextSize="8sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/totalViewsText"
+        app:layout_constraintTop_toBottomOf="@+id/movieName" />
+
+    <TextView
+        android:id="@+id/createdAtText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/createDate"
+        android:textColor="@color/darkTextColor"
+        android:gravity="center_vertical"
+        app:autoSizeMaxTextSize="15sp"
+        app:autoSizeMinTextSize="8sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/totalViewsText" />
+
+    <TextView
+        android:id="@+id/createDateContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textColor="@color/darkTextColor"
+        android:gravity="center_vertical"
+        app:autoSizeMaxTextSize="15sp"
+        app:autoSizeMinTextSize="8sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/createdAtText"
+        app:layout_constraintTop_toBottomOf="@+id/totalViewsContent" />
+
+
+    <TextView
+        android:id="@+id/ratingText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/rating"
+        android:textColor="@color/darkTextColor"
+        android:gravity="center_vertical"
+        app:autoSizeMaxTextSize="15sp"
+        app:autoSizeMinTextSize="8sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createdAtText" />
+    <TextView
+        android:id="@+id/ratingContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textColor="@color/darkTextColor"
+        android:gravity="center_vertical"
+        app:autoSizeMaxTextSize="15sp"
+        app:autoSizeMinTextSize="8sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ratingText"
+        app:layout_constraintTop_toBottomOf="@+id/createDateContent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

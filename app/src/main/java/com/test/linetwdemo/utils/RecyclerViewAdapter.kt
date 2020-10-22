@@ -23,8 +23,10 @@ abstract class RecyclerViewAdapter<T, V : RecyclerViewItemViewHolder?>(
     }
 
     fun addAll(d: List<T>?) {
-        data.addAll(d!!)
-        notifyDataSetChanged()
+        d?.let {
+            data.addAll(it)
+            notifyDataSetChanged()
+        }
     }
 
     fun clear() {

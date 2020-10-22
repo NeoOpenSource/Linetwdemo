@@ -22,6 +22,7 @@ abstract class NetworkBoundResource @MainThread internal constructor() {
     private val result: MediatorLiveData<DataResource<MovieList>> = MediatorLiveData<DataResource<MovieList>>()
     private val compositeDisposable = CompositeDisposable()
     public fun checkDb(){
+        clear()
         result.value = DataResource.loading(MovieList(ArrayList()))
         compositeDisposable.add(readDb())
     }
@@ -61,7 +62,9 @@ abstract class NetworkBoundResource @MainThread internal constructor() {
         return result
     }
 
-
+    public fun clear(){
+        compositeDisposable.clear()
+    }
     @NonNull
     @MainThread
     protected abstract fun loadFromDb(): List<MovieTable>
@@ -75,7 +78,7 @@ abstract class NetworkBoundResource @MainThread internal constructor() {
     // Called to create the API call.
     @NonNull
     @MainThread
-    public abstract fun createCall(): Flowable<MovieList>
+    protected abstract fun createCall(): Flowable<MovieList>
 
     @WorkerThread
     protected abstract fun saveCallResult(@NonNull item: MovieList)

@@ -20,9 +20,9 @@ interface MovieDao {
     fun getAll(): List<MovieTable>
 
 
-    @Query("SELECT * FROM MovieTable WHERE name LIKE :search ")
-    fun findUserWithName(search: String): LiveData<List<MovieTable>>
+//    @Query("SELECT * FROM MovieTable WHERE name LIKE :search ")
+//    fun findUserWithName(search: String): LiveData<List<MovieTable>>
 
     @Query("SELECT * FROM MovieTable WHERE name LIKE :search ")
-    fun findUserWithName2(search: String): List<MovieTable>
+    fun findMovieWithName(search: String): List<MovieTable>
 }

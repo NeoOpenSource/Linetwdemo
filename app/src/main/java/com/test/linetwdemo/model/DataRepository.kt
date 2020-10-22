@@ -1,14 +1,11 @@
 package com.test.linetwdemo.model
-
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.test.linetwdemo.api.PlaceholderServer
 import com.test.linetwdemo.db.MovieDao
+import com.test.linetwdemo.db.MovieDbTransform
 import com.test.linetwdemo.db.MovieTable
 import com.test.linetwdemo.decoder.MovieList
 import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.kotlin.subscribeBy
 
 class DataRepository(private val service: PlaceholderServer,private val movieDao: MovieDao) {
 
@@ -31,18 +28,15 @@ class DataRepository(private val service: PlaceholderServer,private val movieDao
         }
 
     }
-    fun getMovieList2(): Flowable<MovieList> {
-        //service.posts().enqueue()
-        service.posts().subscribeBy {
-            Log.d("e",""+it)
+
+    private val movieDaTransform = object :MovieDbTransform(){
+        override fun readDao(search: String): List<MovieTable> {
+            return movieDao.findMovieWithName(search)
         }
-        return service.posts()
     }
-    fun getMovieDao(){
-        val a = movieDao.getAll()
-    }
-    fun getMovieDaoSearch(search:String){
-        val  liveData = movieDao.findUserWithName(search)
+
+    fun getMovieDaoSearch(search:String): LiveData<DataResource<MovieList>>{
+        return  movieDaTransform.readDd(search).asLiveData()
     }
 
     fun getMovieList(): LiveData<DataResource<MovieList>>{
