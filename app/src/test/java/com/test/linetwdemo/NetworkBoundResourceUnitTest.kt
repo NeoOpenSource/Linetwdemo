@@ -1,12 +1,9 @@
 package com.test.linetwdemo
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.test.linetwdemo.db.MovieTable
 import com.test.linetwdemo.decoder.MovieList
-import com.test.linetwdemo.model.NetworkBoundResource
 import com.test.linetwdemo.utils.TestSchedulerProvider
 import com.test.linetwdemo.utils.TrampolineSchedulerProvider
-import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.schedulers.TestScheduler
 import org.junit.Assert
 import org.junit.Rule
@@ -24,9 +21,23 @@ class NetworkBoundResourceUnitTest {
 
     @Test
     fun `test_get_data_logic`() {
-        val networkBoundResource = NetworkBoundResourceTest(schedulerProvider)
+        val networkBoundResource = TestNetworkBoundResourceHaveData(schedulerProvider)
         networkBoundResource.checkDb()
         val value = networkBoundResource.asLiveData().value?.data?.data?.isEmpty() ?: true
+        Assert.assertFalse(value)
+    }
+
+
+    @Test
+    fun `test_not_data_logic`() {
+        var movieList = MovieList(emptyList())
+        val networkBoundResource = object :TestNetworkBoundResourceNotData(schedulerProvider){
+            override fun saveCallResult(item: MovieList) {
+                movieList = item
+            }
+        }
+        networkBoundResource.checkDb()
+        val value = movieList.data.isEmpty()
         Assert.assertFalse(value)
     }
 }
