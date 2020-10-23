@@ -9,6 +9,7 @@ import androidx.lifecycle.MediatorLiveData
 import com.test.linetwdemo.db.MovieTable
 import com.test.linetwdemo.decoder.Movie
 import com.test.linetwdemo.decoder.MovieList
+import com.test.linetwdemo.utils.BaseSchedulerProvider
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
@@ -18,7 +19,7 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 
-abstract class NetworkBoundResource @MainThread internal constructor() {
+abstract class NetworkBoundResource @MainThread internal constructor(private val baseSchedulerProvider: BaseSchedulerProvider) {
     private val result: MediatorLiveData<DataResource<MovieList>> = MediatorLiveData<DataResource<MovieList>>()
     private val compositeDisposable = CompositeDisposable()
     public fun checkDb(){
@@ -30,8 +31,8 @@ abstract class NetworkBoundResource @MainThread internal constructor() {
         return Flowable.create<List<MovieTable>>({
             it.onNext(this.loadFromDb())
         }, BackpressureStrategy.ERROR)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).subscribeBy(onNext = {
+            .subscribeOn(baseSchedulerProvider.io())
+            .observeOn(baseSchedulerProvider.ui()).subscribeBy(onNext = {
                 if (shouldFetch(it)) {
                     fetchFromNetwork()
                 }else{
@@ -69,23 +70,16 @@ abstract class NetworkBoundResource @MainThread internal constructor() {
     @MainThread
     protected abstract fun loadFromDb(): List<MovieTable>
 
-    //
-    // Called with the data in the database to decide whether it should be
-    // fetched from the network.
+
     @MainThread
     protected abstract fun shouldFetch(@Nullable data: List<MovieTable>): Boolean
 
-    // Called to create the API call.
     @NonNull
     @MainThread
     protected abstract fun createCall(): Flowable<MovieList>
 
     @WorkerThread
     protected abstract fun saveCallResult(@NonNull item: MovieList)
-//
-//    // Called to save the result of the API response into the database
-//    @WorkerThread
-//    protected abstract fun saveCallResult(@NonNull item: RequestType)
-//
+
 
 }

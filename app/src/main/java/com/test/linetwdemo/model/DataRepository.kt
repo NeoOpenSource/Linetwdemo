@@ -5,11 +5,12 @@ import com.test.linetwdemo.db.MovieDao
 import com.test.linetwdemo.db.MovieDbTransform
 import com.test.linetwdemo.db.MovieTable
 import com.test.linetwdemo.decoder.MovieList
+import com.test.linetwdemo.utils.SchedulerProvider
 import io.reactivex.rxjava3.core.Flowable
 
 class DataRepository(private val service: PlaceholderServer,private val movieDao: MovieDao) {
 
-    private val networkBoundResource = object : NetworkBoundResource() {
+    private val networkBoundResource = object : NetworkBoundResource(SchedulerProvider()) {
         override fun loadFromDb(): List<MovieTable> {
             return movieDao.getAll()
         }
