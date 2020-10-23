@@ -24,7 +24,6 @@ class DataRepository(private val service: PlaceholderServer,private val movieDao
         override fun saveCallResult(item: MovieList) {
             val data = item.data.
             map { movie ->  MovieTable(0,movie.drama_id,movie.name,movie.total_views,movie.created_at,movie.thumb,movie.rating)}
-            movieDao.insertMovieList(data)
             return movieDao.insertMovieList(data)
         }
 

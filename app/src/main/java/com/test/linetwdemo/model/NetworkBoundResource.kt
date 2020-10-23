@@ -10,19 +10,17 @@ import com.test.linetwdemo.db.MovieTable
 import com.test.linetwdemo.decoder.Movie
 import com.test.linetwdemo.decoder.MovieList
 import com.test.linetwdemo.utils.BaseSchedulerProvider
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.subscribeBy
-import io.reactivex.rxjava3.schedulers.Schedulers
 
 
 abstract class NetworkBoundResource @MainThread internal constructor(private val baseSchedulerProvider: BaseSchedulerProvider) {
     private val result: MediatorLiveData<DataResource<MovieList>> = MediatorLiveData<DataResource<MovieList>>()
     private val compositeDisposable = CompositeDisposable()
-    public fun checkDb(){
+    fun checkDb(){
         clear()
         result.value = DataResource.loading(MovieList(ArrayList()))
         compositeDisposable.add(readDb())
@@ -51,7 +49,7 @@ abstract class NetworkBoundResource @MainThread internal constructor(private val
     }
     private fun fetchFromNetwork() {
         compositeDisposable.add(createCall().subscribeBy(onError = {
-            result.value = DataResource.error(MovieList(ArrayList()),"error")
+            result.postValue(DataResource.error(MovieList(ArrayList()),it.message ?: ""))
         },onNext = {
             saveCallResult(it)
         },onComplete = {
@@ -63,7 +61,7 @@ abstract class NetworkBoundResource @MainThread internal constructor(private val
         return result
     }
 
-    public fun clear(){
+    fun clear(){
         compositeDisposable.clear()
     }
     @NonNull
